@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../../static/style.css">
+	<title>Post a New Movie to DataBase</title>
+</head>
+<body>
+	<form action='{{ url_for('addmovie') }}' method = "POST">
+		<h3>Enter a new movie to the database</h3>
+		<input type="text" name="name" placeholder="name" /><br>
+		<input type="text" name="genre" placeholder="genre" /><br>
+		<input type="submit" name="submit"/><br>
+	</form>
+
+</body>
+</html>
