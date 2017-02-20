@@ -3,7 +3,7 @@ import sqlite3
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def home():
 	return render_template('index.html')
 
 # enter a new movie
@@ -29,7 +29,26 @@ def addmovie():
 		return render_template('result.html',message=message)
 		conn.close()
 
-# retrieve a movie name from the database
+
+@app.route('/search')
+def search():
+	conn = sqlite3.connect('database.db')
+	cur = conn.cursor()
+	try:
+		name = (request.args.get('name'),)
+		cur.execute('SELECT * FROM movies WHERE name=?',name)
+		conn.commit()
+		message = cur.fetchall()
+	except:
+		message =('DataBase Error')
+	finally:
+		messageList=jsonify(message)
+		conn.close()
+		return messageList
+
+
+#### Extra Credit ####
+# retrieve a all movies from the database
 @app.route('/movies')
 def movies():
 	conn = sqlite3.connect('database.db')
@@ -47,5 +66,5 @@ def movies():
 		return messageList	
 		
 
-
+app.run(debug=True)
 
